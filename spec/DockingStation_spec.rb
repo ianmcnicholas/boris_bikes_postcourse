@@ -14,4 +14,10 @@ describe DockingStation do
   it 'should respond to dock(bike)' do
     expect(subject).to respond_to(:dock).with(1).argument
   end
+
+  it 'should allow user to see if bikes are available' do
+    bike = subject.release_bike
+    subject.dock(bike)
+    expect(subject.bikes).to include(bike)
+  end
 end
