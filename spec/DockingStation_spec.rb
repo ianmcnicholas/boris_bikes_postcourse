@@ -27,4 +27,11 @@ describe DockingStation do
     expect{ subject.release_bike }.to raise_error("There are no bikes available")
   end
 
+  it 'should not allow more than 1 bike to be docked at a time' do
+    bike = Bike.new
+    subject.dock(bike)
+    new_bike = Bike.new
+    expect{ subject.dock(new_bike) }.to raise_error("The docking station is at capacity")
+  end
+
 end
