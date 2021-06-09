@@ -14,7 +14,7 @@ class DockingStation
   end
 
   def dock(bike)
-    fail "The docking station is at capacity" if @bikes.any?
+    fail "The docking station is at capacity" if @bikes.length == 20
     @bikes << bike
   end
 
