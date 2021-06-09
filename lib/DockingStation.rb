@@ -9,6 +9,7 @@ class DockingStation
   end
 
   def release_bike
+    fail "There are no bikes available" if @bikes.empty?
     Bike.new
   end
 
