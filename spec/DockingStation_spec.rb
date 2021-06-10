@@ -53,5 +53,9 @@ describe DockingStation do
    expect(station.capacity).to eq 10
   end
 
-
+  it 'allows the user to log their bike as broken' do
+    bike = Bike.new
+    subject.dock(bike, 'broken')
+    expect(bike.working?).to eq false
+  end
 end

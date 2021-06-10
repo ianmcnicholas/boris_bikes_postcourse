@@ -16,8 +16,13 @@ class DockingStation
     @bikes.pop
   end
 
-  def dock(bike)
+  def dock(bike, condition)
     fail "The docking station is at capacity" if full?
+    if condition == 'broken'
+      bike.status = 'broken'
+    elsif condition == 'okay'
+      bike.status = 'okay'
+    end
     @bikes << bike
   end
 
