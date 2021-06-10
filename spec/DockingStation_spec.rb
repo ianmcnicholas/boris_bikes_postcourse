@@ -27,8 +27,8 @@ describe DockingStation do
     expect{ subject.release_bike }.to raise_error("There are no bikes available")
   end
 
-  it 'should not allow more than 20 bikes to be docked at a time' do
-    20.times{ subject.dock(Bike.new) }
+  it 'should not allow more than the default capacity number of bikes to be docked at a time' do
+    DockingStation::DEFAULT_CAPACITY.times{ subject.dock(Bike.new) }
     new_bike = Bike.new
     expect{ subject.dock(new_bike) }.to raise_error("The docking station is at capacity")
   end
