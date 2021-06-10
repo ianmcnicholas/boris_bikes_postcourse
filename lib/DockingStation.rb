@@ -14,8 +14,14 @@ class DockingStation
   end
 
   def dock(bike)
-    fail "The docking station is at capacity" if @bikes.length == 20
+    fail "The docking station is at capacity" if full?
     @bikes << bike
+  end
+
+  private
+
+  def full?
+    @bikes.length == 20
   end
 
 end
