@@ -21,8 +21,10 @@ class DockingStation
     fail "The docking station is at capacity" if full?
     if condition == "broken"
       bike.status = "broken"
+      @bikes.insert(0, bike)
+    else
+      @bikes << bike
     end
-    @bikes << bike
   end
 
   private
