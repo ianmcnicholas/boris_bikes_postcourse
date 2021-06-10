@@ -1,8 +1,8 @@
 class Bike
-  attr_reader :status
+  attr_accessor :status
 
-  def initialize
-    @status = 'okay'
+  def initialize(status = "okay")
+    @status = status
   end
 
   def working?
