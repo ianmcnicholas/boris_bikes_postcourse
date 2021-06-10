@@ -33,4 +33,15 @@ describe DockingStation do
     expect{ subject.dock(new_bike) }.to raise_error("The docking station is at capacity")
   end
 
+  it 'should update number of bikes apropriately when it docks a bike' do
+    subject.dock(Bike.new)
+    expect(subject.bikes.length).to eq 1
+  end
+
+  it 'should update number of bikes apropriately when it releases a bike' do
+    subject.dock(Bike.new)
+    subject.release_bike
+    expect(subject.bikes.length).to eq 0
+  end
+
 end
