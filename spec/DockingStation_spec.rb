@@ -44,4 +44,14 @@ describe DockingStation do
     expect(subject.bikes.length).to eq 0
   end
 
+  it 'docking stations are created with a default capacity of 20' do
+    expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+  end
+
+  it 'allows system maintainer to set a capacity for docking station' do
+   station = DockingStation.new(10)
+   expect(station.capacity).to eq 10
+  end
+
+
 end
