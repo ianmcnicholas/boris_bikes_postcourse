@@ -2,15 +2,21 @@ require 'DockingStation'
 
 describe DockingStation do
 
+let(:bike) { double :bike }
+
+before(:each) do
+  allow(bike).to receive(:working?).and_return(true)
+  allow(bike).to receive(:status).and_return("okay")
+ end
+
   it 'should respond to :release_bike' do
     expect(subject).to respond_to :release_bike
   end
 
   it 'should release a bike and check if it works' do
-    bike = Bike.new
     subject.dock(bike)
-    bike = subject.release_bike
-    expect(bike).to be_working
+    trike = subject.release_bike
+    expect(trike).to be_working
   end
 
   it 'should respond to :dock(bike)' do
@@ -18,7 +24,6 @@ describe DockingStation do
   end
 
   it 'should allow user to see if bikes are available' do
-    bike = Bike.new
     subject.dock(bike)
     expect(subject.bikes).to include(bike)
   end
@@ -28,18 +33,18 @@ describe DockingStation do
   end
 
   it 'should not allow more than the default capacity number of bikes to be docked at a time' do
-    DockingStation::DEFAULT_CAPACITY.times{ subject.dock(Bike.new) }
-    new_bike = Bike.new
+    DockingStation::DEFAULT_CAPACITY.times{ subject.dock(bike) }
+    new_bike = double(:bike)
     expect{ subject.dock(new_bike) }.to raise_error("The docking station is at capacity")
   end
 
   it 'should update number of bikes apropriately when it docks a bike' do
-    subject.dock(Bike.new)
+    subject.dock(bike)
     expect(subject.bikes.length).to eq 1
   end
 
   it 'should update number of bikes apropriately when it releases a bike' do
-    subject.dock(Bike.new)
+    subject.dock(bike)
     subject.release_bike
     expect(subject.bikes.length).to eq 0
   end
@@ -54,8 +59,12 @@ describe DockingStation do
   end
 
   it 'allows the user to log their bike as broken' do
-    bike = Bike.new
-    subject.dock(bike, 'broken')
+    # bike = Bike.new
+    allow(bike).to receive(:status).and_return("broken")
+    p bike.status
+    # expect(Comment).to receive(:find).and_return(comment)
+    expect(bike).to receive(:status).with("broken")
+    subject.dock(bike, "broken")
     expect(bike.working?).to eq false
   end
 
@@ -70,7 +79,6 @@ describe DockingStation do
     bad_bike = Bike.new
     subject.dock(good_bike)
     subject.dock(bad_bike, "broken")
-    p subject.bikes
     expect(subject.release_bike).to eq good_bike
   end
 
